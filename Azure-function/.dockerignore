@@ -1,0 +1,68 @@
+# =============================================================================
+# .dockerignore — Sat_Kon Solution
+#
+# Excludes build artifacts, tooling, secrets, and local-only config so that
+# the Docker build context sent to the daemon is as small as possible.
+# This speeds up 'docker build' and prevents local secrets leaking into images.
+# =============================================================================
+
+# ── Build artifacts ──────────────────────────────────────────────────────────
+**/bin/
+**/obj/
+
+# ── Visual Studio / IDE files ────────────────────────────────────────────────
+.vs/
+*.user
+*.suo
+*.sln.docstates
+.vscode/
+.idea/
+*.DotSettings.user
+
+# ── Git ──────────────────────────────────────────────────────────────────────
+.git/
+.gitignore
+.gitattributes
+
+# ── Node (if any frontend assets exist) ──────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# ── Logs & temporary files ────────────────────────────────────────────────────
+logs/
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# ── Docker files (no need to bake them into the image itself) ─────────────────
+Dockerfile
+.dockerignore
+docker-compose*.yml
+
+# ── SQL scripts (development only) ───────────────────────────────────────────
+*.sql
+
+# ── Local appsettings overrides (contain dev-only secrets) ───────────────────
+# NOTE: appsettings.json IS included (needed as a base config template).
+#       appsettings.Development.json is excluded; use Azure App Service
+#       Application Settings / Key Vault for environment-specific values.
+**/appsettings.Development.json
+
+# ── Uploaded/generated user files that should live on persistent storage ──────
+# These are served from wwwroot but should be on Azure File Share in production.
+**/wwwroot/uploads/
+**/wwwroot/videos/
+**/wwwroot/excels/
+
+# ── Test projects (if added in future) ───────────────────────────────────────
+**/*Tests*/
+**/*Test*/
+**/*Spec*/
+
+# ── ReadMe / docs ─────────────────────────────────────────────────────────────
+README.md
+*.md
+docs/

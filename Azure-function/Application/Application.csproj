@@ -1,0 +1,76 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Interfaces\**" />
+    <EmbeddedResource Remove="Interfaces\**" />
+    <None Remove="Interfaces\**" />
+  </ItemGroup>
+
+  <!--
+    FrameworkReference gives Application access to IFormFile (Microsoft.AspNetCore.Http)
+    used in CreateEventCommand, CreateSessionCommand, and CreateExhibitorCommand.
+    This is the correct approach for non-Web SDK class libraries that need ASP.NET Core
+    types — identical to the pattern already used in Infrastructure.csproj.
+    Do NOT use a NuGet PackageReference for Microsoft.AspNetCore.Http.Features;
+    that package's NuGet versions only go up to 6.x preview.
+  -->
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      FIXED PACKAGES (2026-05):
+      - MediatR.Extensions.Microsoft.DependencyInjection 11.1.0 → REMOVED
+            (MediatR 12.x merged DI registration into the core package; this extension
+             targets MediatR 11.x and causes NU1107 conflicts with MediatR 12.4.1)
+      - Microsoft.AspNetCore.Hosting.Abstractions 2.3.9 → REMOVED
+            (deprecated legacy package; not needed in .NET 8 class libraries)
+      - Microsoft.AspNetCore.Http.Features 5.0.17 → 8.0.0
+            (must align with the .NET 8 ASP.NET Core runtime)
+      - Microsoft.Extensions.Caching.Abstractions 10.0.5 → 8.0.0
+            (10.x is a .NET 10 preview package; incompatible with net8.0 TFM)
+      - Microsoft.Extensions.Logging 10.0.3 → 8.0.0
+            (same — downgraded to the stable .NET 8 version)
+      - FluentValidation 12.1.1 → 11.10.0
+            (FluentValidation.AspNetCore 11.3.1 in Sat_Kon.csproj requires FV 11.x;
+             FV 12 is incompatible with the ASP.NET integration package)
+      - System.IdentityModel.Tokens.Jwt 7.0.0 → 7.7.1
+            (latest stable 7.x; aligns with JwtBearer 8.0.0 which targets this range)
+      - XAct.Core.PCL 0.0.5014 → REMOVED
+            (PCL-era package; only one active using found in GetUsersQuery.cs
+             which does not actually consume any XAct type — safe to remove)
+    -->
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
+    <PackageReference Include="EPPlus" Version="8.5.0" />
+    <PackageReference Include="FluentValidation" Version="11.10.0" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.7" />
+    <PackageReference Include="StackExchange.Redis" Version="2.11.8" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DTOs\" />
+    <Folder Include="Features\GetAgenda\Command\" />
+    <Folder Include="Features\LiveStreaming\Query\" />
+    <Folder Include="Service\" />
+  </ItemGroup>
+
+</Project>

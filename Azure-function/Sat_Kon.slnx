@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Application/Application.csproj" Id="3db3fab4-1dbf-4691-a404-fa75c228b6d6" />
+  <Project Path="Domain/Domain.csproj" Id="203ea338-1f44-4c18-a298-bfd1c5c2e567" />
+  <Project Path="Infrastructure/Infrastructure.csproj" Id="3a0e7e63-b72d-4a0b-a2ce-bf15d2f41c67" />
+  <Project Path="Sat_Kon/Sat_Kon.csproj" />
+  <Project Path="SatKon.EmailWorker/SatKon.EmailWorker.csproj" />
+</Solution>

@@ -1,0 +1,15 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "AzureWebJobsStorage": "xyz",
+    "AzureStorage__ConnectionString": "xyz",
+    "AzureServiceBusConnectionString": "xyz",
+    "ConnectionStrings:DefaultConnection": "xyz",
+    "AzureStorage__ContainerName": "documents",
+    "AzureStorage__SessionVideosFolder": "session-videos",
+    "AzureStorage__QueueName": "emails",
+    "AzureWebPubSubConnectionString": "xyz",
+    "AzureWebPubSubHubName": "salesforcestatus"
+  }
+}
