@@ -7,7 +7,6 @@ on:
 
 jobs:
   docker:
-
     runs-on: ubuntu-latest
 
     defaults:
@@ -15,7 +14,6 @@ jobs:
         working-directory: Azure-function
 
     steps:
-
       - name: Checkout Source
         uses: actions/checkout@v4
 
@@ -41,12 +39,15 @@ jobs:
         run: |
           docker push ${{ secrets.ACR_LOGIN_SERVER }}/email-worker:latest
 
-      - name: Update App Service Container
+      - name: Configure App Service Container
         run: |
           az webapp config container set \
             --name satkon-frontend-tarckrooms \
             --resource-group satkon-prod-rg \
-            --container-image-name ${{ secrets.ACR_LOGIN_SERVER }}/email-worker:latest
+            --container-image-name ${{ secrets.ACR_LOGIN_SERVER }}/email-worker:latest \
+            --container-registry-url https://${{ secrets.ACR_LOGIN_SERVER }} \
+            --container-registry-user ${{ secrets.ACR_USERNAME }} \
+            --container-registry-password ${{ secrets.ACR_PASSWORD }}
 
       - name: Restart App Service
         run: |
