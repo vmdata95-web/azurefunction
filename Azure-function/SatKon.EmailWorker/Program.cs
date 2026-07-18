@@ -167,6 +167,7 @@ internal sealed class SmtpStartupDiagnosticsService : IHostedService
 
         return Task.CompletedTask;
     }
+    // stop
 
     public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 }
